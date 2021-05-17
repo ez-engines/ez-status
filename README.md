@@ -27,11 +27,11 @@ Configuration interface allows you to change default behavior
 # config/initializers/ez_status.rb
 Ez::Status.configure do |config|
   config.monitors = [
-    Ez::Status::Providers::Database.new,
-    Ez::Status::Providers::Cache.new,
-    # Ez::Status::Providers::Redis.new,
-    # Ez::Status::Providers::Sidekiq.new,
-    # MyCustomProvider.new,
+    Ez::Status::Providers::Database,
+    Ez::Status::Providers::Cache,
+    # Ez::Status::Providers::Redis,
+    # Ez::Status::Providers::Sidekiq,
+    # MyCustomProvider,
   ]
 
   # Status page ships with default generated CSS classes.

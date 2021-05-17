@@ -1,0 +1,9 @@
+= div_for 'index-container'
+  h1 class="#{css_for('index-header')}" = header
+
+  main class="#{css_for('index-main')}"
+    - monitors.each_pair do |monitor_name, monitor_result|
+
+      article class="#{css_for('index-status')}"
+        span class="#{css_for('index-check-name')}"   = monitor_name
+        span class="#{css_for('index-check-result')}" = monitor_result

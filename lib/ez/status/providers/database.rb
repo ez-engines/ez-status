@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-# Ez::Status::Providers::Database.new.check!
 module Ez
   module Status
     module Providers
-      # class DatabaseException < StandardError; end
       class Database
         def check!
           begin

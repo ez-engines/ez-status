@@ -24,4 +24,14 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rails', '>= 5.0.0', '< 7.0.0'
   spec.add_dependency 'ez-core', '~> 0.2.0'
+
+  spec.add_dependency 'cells-rails',    '~> 0.1.0'
+  spec.add_dependency 'cells-slim',     '~> 0.0.6'
+
+  spec.add_development_dependency 'capybara'
+  spec.add_development_dependency 'guard-rspec'
+  spec.add_development_dependency 'launchy'
+  spec.add_development_dependency 'pry-rails'
+  spec.add_development_dependency 'rspec-rails'
+  spec.add_development_dependency 'simplecov'
 end

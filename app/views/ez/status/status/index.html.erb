@@ -5,48 +5,14 @@
   </header>
 
   <main class="status__profiles">
-    <article class="status__profile">
-      <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/relational-database-2417424-2036371.png" alt="PostgreSQL Logo" class="status__picture">
-      <span class="status__name">Database</span>
-      <span class="status__value">OK <span>(200)</span></span>
-    </article>
+    <% Ez::Status.config.monitors.each do |monitor| %>
+      <% result = monitor.new.check! %>
 
-    <article class="status__profile">
-      <img src="https://habrastorage.org/getpro/habr/post_images/3ea/847/61b/3ea84761b897d0af5304dc43caca1249.png" alt="PostgreSQL Logo" class="status__picture">
-      <span class="status__name">PostgreSQL</span>
-      <span class="status__value">OK <span>(200)</span></span>
-    </article>
-
-    <article class="status__profile">
-      <img src="//zametkinapolyah.ru/wp-content/uploads/2016/06/caching.jpg" alt="Cache" width="60px" height="60px" class="status__picture">
-
-      <span class="status__name">Cache</span>
-      <span class="status__value">OK <span>(200)</span></span>
-    </article>
-
-    <article class="status__profile">
-      <img src="https://cdn.iconscout.com/icon/free/png-256/redis-83994.png" alt="Redis" class="status__picture">
-      <span class="status__name">Redis</span>
-      <span class="status__value">OK <span>(200)</span></span>
-    </article>
-
-    <article class="status__profile">
-      <img src="https://maverick9000.github.io/assets/img/uploads/sidekiq.png" alt="Redis" class="status__picture">
-      <span class="status__name">Sidekiq</span>
-      <span class="status__value failed">FAILED <span>(403)</span></span>
-    </article>
-
-    <article class="status__profile">
-      <img src="https://i7.uihere.com/icons/996/761/175/unknown-format-d3cee96a65f682570334596e3089ee17.png" alt="Redis" class="status__picture">
-      <span class="status__name">Active Job</span>
-      <span class="status__value failed">FAILED <span>(403)</span></span>
-    </article>
-
-    <article class="status__profile">
-      <img src="https://i7.uihere.com/icons/996/761/175/unknown-format-d3cee96a65f682570334596e3089ee17.png" alt="Redis" class="status__picture">
-      <span class="status__name">Resque</span>
-      <span class="status__value failed">FAILED <span>(403)</span></span>
-    </article>
+      <article class="status__profile">
+        <span class="status__name"><%= monitor.name.demodulize %></span>
+        <span class="status__value"><%= result ? 'OK' : 'FAILURE' %></span>
+      </article>
+    <% end %>
   </main>
   </div>
 </article>

@@ -9,6 +9,10 @@ module Ez
 
     configure do |config|
       config.monitors = []
+
+      config.basic_auth_credentials = {}
+
+      config.ui_header = ''
       config.ui_custom_css_map = {}
     end
   end

@@ -9,7 +9,7 @@ module Ez
 
       def monitors
         @monitors ||= Ez::Status.config.monitors.each_with_object({}) do |monitor, acum|
-          acum[monitor.name.demodulize] = monitor.new.check! ? 'OK' : 'FAILURE'
+          acum[monitor.name.demodulize] = monitor.new.check ? 'OK' : 'FAILURE'
         end
       end
     end

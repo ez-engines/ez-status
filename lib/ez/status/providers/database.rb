@@ -4,7 +4,7 @@ module Ez
   module Status
     module Providers
       class Database
-        def check!
+        def check
           begin
             ActiveRecord::Base.establish_connection # Establishes connection
             ActiveRecord::Base.connection # Calls connection object

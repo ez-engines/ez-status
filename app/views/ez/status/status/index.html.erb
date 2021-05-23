@@ -6,7 +6,7 @@
 
   <main class="status__profiles">
     <% Ez::Status.config.monitors.each do |monitor| %>
-      <% result = monitor.new.check! %>
+      <% result = monitor.new.check %>
 
       <article class="status__profile">
         <span class="status__name"><%= monitor.name.demodulize %></span>

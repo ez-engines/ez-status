@@ -75,7 +75,7 @@ RSpec.describe '/status', type: :feature do
 
     context 'failure' do
       before do
-        database_check_mock = instance_double(Ez::Status::Providers::Database, check!: false)
+        database_check_mock = instance_double(Ez::Status::Providers::Database, check: false)
         allow(Ez::Status::Providers::Database).to receive(:new).and_return(database_check_mock)
         visit '/status'
       end

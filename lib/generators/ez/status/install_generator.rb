@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-module Ez::Status
-  class InstallGenerator < Rails::Generators::Base
-    def create_initializer_file
-      create_file 'config/initializers/ez_status.rb',
-                  "require 'ez/status/providers/database'
+module Ez
+  module Status
+    class InstallGenerator < Rails::Generators::Base
+      # rubocop:disable Metrics/MethodLength
+      def create_initializer_file
+        create_file 'config/initializers/ez_status.rb',
+                    "require 'ez/status/providers/database'
 require 'ez/status/providers/cache'
 require 'ez/status/providers/delayed_job'
 require 'ez/status/providers/redis'
@@ -46,6 +48,8 @@ Ez::Status.configure do |config|
   ]
 end
 "
+      end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

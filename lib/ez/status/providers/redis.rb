@@ -10,7 +10,7 @@ module Ez
           redis.set(key, time)
           fetched = redis.get(key)
 
-          fetched == time ? true : false
+          fetched == time
         rescue
           false
         ensure

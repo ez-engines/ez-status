@@ -7,7 +7,7 @@ module Ez
         DEFAULT_QUEUES_SIZE = 100
 
         def check
-          ::Delayed::Job.count < DEFAULT_QUEUES_SIZE ? true : false
+          ::Delayed::Job.count < DEFAULT_QUEUES_SIZE
         rescue
           false
         end

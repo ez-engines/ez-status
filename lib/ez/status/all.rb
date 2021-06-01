@@ -1,13 +1,12 @@
-%w(
-  database
-  cache
-  delayed_job
-  redis
-  resque
+# frozen_string_literal: true
+
+[
+  database,
+  cache,
+  delayed_job,
+  redis,
+  resque,
   sidekiq
-).each do |provider|
-  begin
-    require "ez/status/providers/#{provider}"
-  rescue LoadError
-  end
+].each do |provider|
+  require "ez/status/providers/#{provider}"
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ez
   module Status
     class ApplicationController < ActionController::Base

@@ -8,7 +8,7 @@ module Ez
           time = Time.now.to_s
           Rails.cache.write(key, time)
           fetched = Rails.cache.read(key)
-          fetched == time ? true : false
+          fetched == time
         rescue
           false
         end

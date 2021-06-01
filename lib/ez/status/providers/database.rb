@@ -5,13 +5,11 @@ module Ez
     module Providers
       class Database
         def check
-          begin
-            ActiveRecord::Base.establish_connection # Establishes connection
-            ActiveRecord::Base.connection # Calls connection object
-            ActiveRecord::Base.connected? ? true : false
-          rescue
-            false
-          end
+          ActiveRecord::Base.establish_connection # Establishes connection
+          ActiveRecord::Base.connection # Calls connection object
+          ActiveRecord::Base.connected?
+        rescue
+          false
         end
       end
     end

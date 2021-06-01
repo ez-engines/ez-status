@@ -17,7 +17,7 @@ require 'ez/status/providers/sidekiq'
 #       http.request(request)
 #     end
 #
-#     response.code == '200' ? true : false
+#     response.code == '200'
 #   end
 # end
 

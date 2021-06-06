@@ -8,8 +8,17 @@ module Ez
       end
 
       def monitors
-        @monitors ||= Ez::Status.config.monitors.each_with_object({}) do |monitor, acum|
-          acum[monitor.name.demodulize] = monitor.new.check ? 'OK' : 'FAILURE'
+        @monitors ||= Ez::Status.config.monitors.each_with_object([]) do |monitor, acum|
+          is_working, msg, value = monitor.new.check
+        rescue StandardError => e
+          msg = e.message
+        ensure
+          acum << {
+            name: monitor.name.demodulize,
+            is_working: is_working ? 'OK' : 'FAILURE',
+            msg: msg,
+            value: value
+          }
         end
       end
     end

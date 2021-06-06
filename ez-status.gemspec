@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-  spec.required_ruby_version       = '>= 2.5.0'
+  spec.required_ruby_version       = '>= 2.4.0', '< 3'
   spec.metadata['homepage_uri']    = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/ez-engines/ez-status'
   spec.metadata['changelog_uri']   = 'https://github.com/ez-engines/ez-status/blob/master/CHANGELOG.md'

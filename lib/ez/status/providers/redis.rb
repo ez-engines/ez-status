@@ -3,6 +3,8 @@
 module Ez
   module Status
     module Providers
+      class RedisException < StandardError; end
+
       class Redis
         def check
           time = Time.now.to_s(:rfc2822)
@@ -11,8 +13,8 @@ module Ez
           fetched = redis.get(key)
 
           fetched == time
-        rescue
-          false
+        rescue Exception => e
+          raise RedisException.new(e.message)
         ensure
           redis.close
         end

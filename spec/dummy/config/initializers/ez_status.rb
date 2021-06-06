@@ -1,13 +1,13 @@
 require 'ez/status/providers/database'
 require 'ez/status/providers/cache'
-require 'ez/status/providers/delayed_job'
-require 'ez/status/providers/redis'
-require 'ez/status/providers/resque'
-require 'ez/status/providers/sidekiq'
+# require 'ez/status/providers/delayed_job'
+# require 'ez/status/providers/redis'
+# require 'ez/status/providers/resque'
+# require 'ez/status/providers/sidekiq'
 
 # class MyCustomProvider
 #   def check
-#     uri = URI.parse('https://www.google.com/')
+#     uri = URI.parse('http://www.google.com/')
 #     request = Net::HTTP::Get.new(uri)
 #     req_options = {
 #       use_ssl: uri.scheme == 'https',
@@ -16,8 +16,9 @@ require 'ez/status/providers/sidekiq'
 #     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
 #       http.request(request)
 #     end
-#
-#     response.code == '200'
+#     [response.code == '200', response.message, response.code]
+#   rescue StandardError => e
+#     [false, e.message]
 #   end
 # end
 

@@ -10,6 +10,11 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'pry-rails'
 require 'capybara/rails'
+require 'byebug'
+
+require 'redis'
+require 'resque'
+require 'sidekiq'
 
 Dir[Ez::Status::Engine.root.join('spec/support/*.rb')].sort.each { |f| require f }
 

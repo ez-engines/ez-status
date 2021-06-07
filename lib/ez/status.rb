@@ -14,7 +14,7 @@ module Ez
 
       config.basic_auth_credentials = {}
 
-      config.ui_header = ''
+      config.ui_header = nil
       config.ui_custom_css_map = {}
     end
   end

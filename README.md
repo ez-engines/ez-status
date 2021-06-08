@@ -142,7 +142,7 @@ Just create your own class with 1 public method `run!` and raise an exception in
 
 ```ruby
 class MyCustomProvider
-  def run!
+  def check
     raise 'Oops!' if false
 
     'OK'
@@ -150,8 +150,17 @@ class MyCustomProvider
 end
 ```
 
-## Contributing
-TODO
+## TODO
+
+-
+- 
+- 
+
+## Author
+
+Volodya Sveredyuk, Telegram Channel: [SveredyukCast](https://t.me/svcast)
+
+Vasyl Shevchenko, GitHub: [VasylShevchenko](https://github.com/VasylShevchenko)
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

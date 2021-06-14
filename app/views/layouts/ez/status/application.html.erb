@@ -9,7 +9,7 @@
   <%#= csp_meta_tag %>
 
   <%#= stylesheet_link_tag    "ez/status/application", media: "all" %>
-<!--   <style type="text/css" media="screen">
+   <style type="text/css" media="screen">
       body {
           margin: 0;
           background-color: #eaeaea;
@@ -18,7 +18,8 @@
           place-items: center;
           font-family: 'Source Sans Pro', sans-serif;
       }
-      .status {
+
+      .ez-status-index-container {
           margin-top: 50px;
           max-width: 800px;
           width: 100%;
@@ -26,7 +27,8 @@
           box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
       }
 
-      .status header {
+      /* HEADER BEGIN */
+      .ez-status-index-header {
           --start: 15%;
           height: 130px;
           background-image: repeating-radial-gradient(circle at var(--start), transparent 0%, transparent 10%, rgba(54, 89, 219, .33) 10%, rgba(54, 89, 219, .33) 17%), linear-gradient(to right, #5b7cfa, #3659db);
@@ -36,7 +38,7 @@
           overflow: hidden;
       }
 
-      .status header .status__title {
+      .ez-status-index-header .ez-status-index-title {
           position: absolute;
           z-index: 2;
           top: 50%;
@@ -46,17 +48,17 @@
           margin: 0;
       }
 
-      .status header .status__title span {
+      .ez-status-index-header .ez-status-index-title span {
           display: block;
       }
 
-      .status header .status__title--top {
+      .ez-status-index-header .ez-status-index-title-top {
           font-size: 24px;
           font-weight: 700;
           letter-spacing: 6.5px;
       }
 
-      .status header .status__title--bottom {
+      .ez-status-index-header .ez-status-index-title-bottom {
           font-size: 13px;
           font-weight: 500;
           letter-spacing: 3.55px;
@@ -64,7 +66,8 @@
           transform: translateY(-2px);
       }
 
-      .status header .status__icon {
+      .ez-status-index-header .ez-status-index-icon {
+          height: 100%;
           fill: #fff;
           opacity: 0.35;
           width: 50px;
@@ -73,8 +76,10 @@
           left: var(--start);
           transform: translate(-50%, -50%);
       }
+      /* HEADER END */
 
-      .status__profiles {
+      /* MAIN BEGIN */
+      .ez-status-index-main {
           background-color: #fff;
           border-radius: 0 0 12px 12px;
           padding: 15px 15px 20px;
@@ -82,9 +87,9 @@
           row-gap: 8px;
       }
 
-      .status__profile {
+      .ez-status-index-status {
           display: grid;
-          grid-template-columns: 1fr 3fr 2fr;
+          grid-template-columns: 3fr 2fr 2fr 3fr;
           align-items: center;
           padding: 10px 30px 10px 10px;
           overflow: hidden;
@@ -95,19 +100,19 @@
           background-color: #fff;
       }
 
-      .status__profile:hover {
+      .ez-status-index-status:hover {
           transform: scale(1.01);
           box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
       }
 
-      .status__picture {
+      .ez-status-picture {
           max-width: 100%;
           width: 60px;
           border-radius: 25%;
           box-shadow: 0 0 0 10px #ebeef3, 0 0 0 22px #f3f4f6;
       }
 
-      .status__name {
+      .ez-status-index-check-name {
           color: #979cb0;
           font-weight: 600;
           font-size: 20px;
@@ -115,24 +120,40 @@
           margin-left: 12px;
       }
 
-      .status__value {
+      .ez-status-index-check-message {
+          color: #979cb0;
+          font-weight: 600;
+          font-size: 20px;
+          letter-spacing: 0.64px;
+          margin-left: 12px;
+      }
+
+      .ez-status-index-check-value {
           color: #35d8ac;
           font-weight: 700;
           font-size: 34px;
           text-align: right;
       }
 
-      .failed {
+      .ez-status-index-check-result {
+          color: #35d8ac;
+          font-weight: 700;
+          font-size: 34px;
+          text-align: right;
+      }
+
+      .ez-status-failed {
           color: #a0050a;
       }
 
-      .status__value > span {
+      .ez-status-index-check-value > span {
           opacity: 0.8;
           font-weight: 600;
           font-size: 13px;
           margin-left: 3px;
       }
-  </style> -->
+      /* MAIN END */
+   </style>
 </head>
 <body>
   <%= yield %>

@@ -1,11 +1,54 @@
 = div_for 'index-container'
-  h1 class="#{css_for('index-header')}" = header
+  header class="#{css_for('index-header')}"
+    h1 class="#{css_for('index-title')}"
+      span class="#{css_for('index-top')}" = header
+      span class="#{css_for('index-bottom')}"
+
+    | <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+       width="980.000000pt" height="980.000000pt" viewBox="0 0 980.000000 980.000000"
+       preserveAspectRatio="xMidYMid meet"
+       class="#{css_for('index-icon')}">
+      <g transform="translate(0.000000,980.000000) scale(0.100000,-0.100000)"
+      fill="#000000" stroke="none">
+      <path d="M3053 9786 c-103 -34 -176 -98 -222 -196 l-26 -55 0 -785 0 -785 26
+      -56 c37 -79 90 -133 167 -171 59 -29 76 -33 152 -33 76 0 93 4 152 33 77 38
+      130 92 167 171 l26 56 0 785 0 785 -26 56 c-58 124 -169 199 -302 205 -43 3
+      -89 -2 -114 -10z"/>
+      <path d="M6553 9786 c-103 -34 -176 -98 -222 -196 l-26 -55 0 -785 0 -785 26
+      -56 c37 -79 90 -133 167 -171 59 -29 76 -33 152 -33 76 0 93 4 152 33 77 38
+      130 92 167 171 l26 56 0 785 0 785 -26 56 c-58 124 -169 199 -302 205 -43 3
+      -89 -2 -114 -10z"/>
+      <path d="M1255 9093 c-73 -6 -237 -44 -324 -75 -186 -66 -345 -165 -493 -307
+      -217 -208 -343 -433 -410 -732 l-23 -104 0 -3325 0 -3325 23 -104 c67 -299
+      193 -525 409 -731 196 -188 411 -302 686 -362 l102 -23 3675 0 3675 0 102 23
+      c298 66 527 194 733 409 188 196 302 411 362 686 l23 102 0 3325 0 3325 -23
+      102 c-66 298 -193 526 -410 734 -191 184 -388 290 -662 356 -103 25 -114 26
+      -552 30 l-448 5 0 -351 0 -351 379 0 c406 0 476 -6 583 -51 157 -67 288 -190
+      362 -341 83 -170 76 143 76 -3458 0 -3603 7 -3288 -77 -3460 -38 -79 -60 -109
+      -132 -181 -72 -72 -102 -94 -181 -132 -173 -84 185 -77 -3810 -77 -3992 0
+      -3638 -7 -3808 76 -196 96 -337 279 -378 491 -21 113 -21 6453 0 6566 53 276
+      277 500 553 553 57 11 166 14 454 14 l379 0 0 350 0 350 -402 -2 c-222 -1
+      -421 -3 -443 -5z"/>
+      <path d="M4200 8750 l0 -350 700 0 700 0 0 350 0 350 -700 0 -700 0 0 -350z"/>
+      <path d="M1653 6986 c-102 -32 -176 -97 -222 -196 -22 -46 -26 -69 -26 -140 0
+      -76 4 -93 33 -152 38 -77 92 -130 171 -167 l56 -26 3235 0 3235 0 56 26 c79
+      37 133 90 171 167 29 59 33 76 33 152 0 76 -4 93 -33 152 -38 77 -92 130 -171
+      167 l-56 26 -3220 2 c-2643 1 -3228 -1 -3262 -11z"/>
+      <path d="M3053 4886 c-102 -32 -176 -97 -222 -196 -22 -46 -26 -69 -26 -140 0
+      -76 4 -93 33 -152 38 -77 92 -130 171 -167 l56 -26 1835 0 1835 0 56 26 c79
+      37 133 90 171 167 29 59 33 76 33 152 0 76 -4 93 -33 152 -38 77 -92 130 -171
+      167 l-56 26 -1820 2 c-1485 1 -1828 -1 -1862 -11z"/>
+      <path d="M3053 2786 c-102 -32 -176 -97 -222 -196 -22 -46 -26 -69 -26 -140 0
+      -76 4 -93 33 -152 38 -77 92 -130 171 -167 l56 -26 1835 0 1835 0 56 26 c79
+      37 133 90 171 167 29 59 33 76 33 152 0 76 -4 93 -33 152 -38 77 -92 130 -171
+      167 l-56 26 -1820 2 c-1485 1 -1828 -1 -1862 -11z"/>
+      </g>
+      </svg>
 
   main class="#{css_for('index-main')}"
     - monitors.each do |monitor|
-      article class="#{css_for('index-status')}"
-        span class="#{css_for('index-check-name')}"   = monitor[:name]
-        span class="#{css_for('index-check-result')}" = monitor[:result]
-        span class="#{css_for('index-check-result')}" = monitor[:msg]
-        span class="#{css_for('index-check-result')}" = monitor[:value]
-      br
+      div class="#{css_for('index-status')}" id=(monitor[:name].to_sym)
+        span class="#{css_for('index-check-name')}" = monitor[:name]
+        span class="#{css_for('index-check-message')} #{css_for('failed') if monitor[:result] == 'FAILURE'}" = monitor[:msg]
+        span class="#{css_for('index-check-value')}   #{css_for('failed') if monitor[:result] == 'FAILURE'}" = monitor[:value]
+        span class="#{css_for('index-check-result')}  #{css_for('failed') if monitor[:result] == 'FAILURE'}" = monitor[:result]

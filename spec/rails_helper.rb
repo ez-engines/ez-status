@@ -15,6 +15,7 @@ require 'byebug'
 require 'redis'
 require 'resque'
 require 'sidekiq'
+require 'delayed_job_active_record'
 
 Dir[Ez::Status::Engine.root.join('spec/support/*.rb')].sort.each { |f| require f }
 

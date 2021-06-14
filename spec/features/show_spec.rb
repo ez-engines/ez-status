@@ -2,6 +2,13 @@
 
 require 'rails_helper'
 
+require 'ez/status/providers/database'
+require 'ez/status/providers/cache'
+require 'ez/status/providers/delayed_job'
+require 'ez/status/providers/redis'
+require 'ez/status/providers/resque'
+require 'ez/status/providers/sidekiq'
+
 RSpec.describe '/status', type: :feature do
   describe 'Basic Authentication' do
     context 'custom' do
@@ -100,220 +107,119 @@ RSpec.describe '/status', type: :feature do
     end
   end
 
-  describe 'check Cache provider' do
+  describe 'check default providers' do
+    let(:monitors) { [
+      Ez::Status::Providers::Database,
+      Ez::Status::Providers::Cache,
+      Ez::Status::Providers::DelayedJob,
+      Ez::Status::Providers::Redis,
+      Ez::Status::Providers::Resque,
+      Ez::Status::Providers::Sidekiq
+    ] }
+
     around do |spec|
-      Ez::Status.configure do |config|
-        config.monitors = [ Ez::Status::Providers::Cache ]
-      end
+      Ez::Status.config.monitors = monitors
       spec.run
-      Ez::Status.configure { |config| config.monitors = [] }
+      Ez::Status.config.monitors = []
     end
 
     context 'success' do
       before { visit '/status' }
 
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Cache'
-        expect(page).to have_content 'OK'
+      it 'show success message for Database' do
+        within('#Database') do
+          expect(page).to have_content 'Database'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for Cache' do
+        within('#Cache') do
+          expect(page).to have_content 'Cache'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for DelayedJob' do
+        within('#DelayedJob') do
+          # rails generate delayed_job:active_record
+          # rake db:migrate
+          expect(page).to have_content 'DelayedJob'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for Redis' do
+        within('#Redis') do
+          expect(page).to have_content 'Redis'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for Resque' do
+        within('#Resque') do
+          expect(page).to have_content 'Resque'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for Sidekiq' do
+        within('#Sidekiq') do
+          expect(page).to have_content 'Sidekiq'
+          expect(page).to have_content 'OK'
+        end
       end
     end
 
     context 'failure' do
       before do
-        database_check_mock = instance_double(Ez::Status::Providers::Cache, check: false)
-        allow(Ez::Status::Providers::Cache).to receive(:new).and_return(database_check_mock)
+        monitors.each do |monitor|
+          check_mock = instance_double(monitor, check: false)
+          allow(monitor).to receive(:new).and_return(check_mock)
+        end
         visit '/status'
       end
 
-      it 'show failure message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Cache'
-        expect(page).to have_content 'FAILURE'
-      end
-    end
-  end
-
-  describe 'check Database provider' do
-    around do |spec|
-      Ez::Status.configure do |config|
-        config.monitors = [ Ez::Status::Providers::Database ]
-      end
-      spec.run
-      Ez::Status.configure { |config| config.monitors = [] }
-    end
-
-    context 'success' do
-      before { visit '/status' }
-
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Database'
-        expect(page).to have_content 'OK'
-      end
-    end
-
-    context 'failure' do
-      before do
-        database_check_mock = instance_double(Ez::Status::Providers::Database, check: false)
-        allow(Ez::Status::Providers::Database).to receive(:new).and_return(database_check_mock)
-        visit '/status'
+      it 'show failure message for Database' do
+        within('#Database') do
+          expect(page).to have_content 'Database'
+          expect(page).to have_content 'FAILURE'
+        end
       end
 
-      it 'show failure message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Database'
-        expect(page).to have_content 'FAILURE'
-      end
-    end
-  end
-
-  describe 'check DelayedJob provider' do
-    around do |spec|
-      require 'ez/status/providers/delayed_job'
-
-      Ez::Status.configure do |config|
-        config.monitors = [ Ez::Status::Providers::DelayedJob ]
-      end
-      spec.run
-      Ez::Status.configure { |config| config.monitors = [] }
-    end
-
-    context 'success' do
-      before do
-        database_check_mock = instance_double(Ez::Status::Providers::DelayedJob, check: [true, 'connected', 200])
-        allow(Ez::Status::Providers::DelayedJob).to receive(:new).and_return(database_check_mock)
-        visit '/status'
+      it 'show failure message for Cache' do
+        within('#Cache') do
+          expect(page).to have_content 'Cache'
+          expect(page).to have_content 'FAILURE'
+        end
       end
 
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'DelayedJob'
-        expect(page).to have_content 'OK'
-        expect(page).to have_content 'connected'
-        expect(page).to have_content '20'
-      end
-    end
-
-    context 'failure' do
-      before do
-        database_check_mock = instance_double(Ez::Status::Providers::DelayedJob, check: false)
-        allow(Ez::Status::Providers::DelayedJob).to receive(:new).and_return(database_check_mock)
-        visit '/status'
+      it 'show failure message for DelayedJob' do
+        within('#DelayedJob') do
+          expect(page).to have_content 'DelayedJob'
+          expect(page).to have_content 'FAILURE'
+        end
       end
 
-      it 'show failure message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'DelayedJob'
-        expect(page).to have_content 'FAILURE'
-      end
-    end
-  end
-
-  describe 'check Redis provider' do
-    around do |spec|
-      require 'ez/status/providers/redis'
-
-      Ez::Status.configure do |config|
-        config.monitors = [ Ez::Status::Providers::Redis ]
-      end
-      spec.run
-      Ez::Status.configure { |config| config.monitors = [] }
-    end
-
-    context 'success' do
-      before { visit '/status' }
-
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Redis'
-        expect(page).to have_content 'OK'
-      end
-    end
-
-    context 'failure' do
-      before do
-        database_check_mock = instance_double(Ez::Status::Providers::Redis, check: false)
-        allow(Ez::Status::Providers::Redis).to receive(:new).and_return(database_check_mock)
-        visit '/status'
+      it 'show failure message for Redis' do
+        within('#Redis') do
+          expect(page).to have_content 'Redis'
+          expect(page).to have_content 'FAILURE'
+        end
       end
 
-      it 'show failure message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Redis'
-        expect(page).to have_content 'FAILURE'
-      end
-    end
-  end
-
-  describe 'check Resque provider' do
-    around do |spec|
-      require 'ez/status/providers/resque'
-
-      Ez::Status.configure do |config|
-        config.monitors = [ Ez::Status::Providers::Resque ]
-      end
-      spec.run
-      Ez::Status.configure { |config| config.monitors = [] }
-    end
-
-    context 'success' do
-      before { visit '/status' }
-
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Resque'
-        expect(page).to have_content 'OK'
-      end
-    end
-
-    context 'failure' do
-      before do
-        database_check_mock = instance_double(Ez::Status::Providers::Resque, check: false)
-        allow(Ez::Status::Providers::Resque).to receive(:new).and_return(database_check_mock)
-        visit '/status'
+      it 'show failure message for Resque' do
+        within('#Resque') do
+          expect(page).to have_content 'Resque'
+          expect(page).to have_content 'FAILURE'
+        end
       end
 
-      it 'show failure message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Resque'
-        expect(page).to have_content 'FAILURE'
-      end
-    end
-  end
-
-  describe 'check Sidekiq provider' do
-    around do |spec|
-      require 'ez/status/providers/sidekiq'
-
-      Ez::Status.configure do |config|
-        config.monitors = [ Ez::Status::Providers::Sidekiq ]
-      end
-      spec.run
-      Ez::Status.configure { |config| config.monitors = [] }
-    end
-
-    context 'success' do
-      before { visit '/status' }
-
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Sidekiq'
-        expect(page).to have_content 'OK'
-      end
-    end
-
-    context 'failure' do
-      before do
-        database_check_mock = instance_double(Ez::Status::Providers::Sidekiq, check: false)
-        allow(Ez::Status::Providers::Sidekiq).to receive(:new).and_return(database_check_mock)
-        visit '/status'
-      end
-
-      it 'show failure message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Sidekiq'
-        expect(page).to have_content 'FAILURE'
+      it 'show failure message for Sidekiq' do
+        within('#Sidekiq') do
+          expect(page).to have_content 'Sidekiq'
+          expect(page).to have_content 'FAILURE'
+        end
       end
     end
   end

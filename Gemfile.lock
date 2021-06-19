@@ -111,6 +111,9 @@ GEM
     ez-core (0.2.0)
     ffi (1.15.0)
     formatador (0.2.5)
+    generator_spec (0.9.4)
+      activesupport (>= 3.0.0)
+      railties (>= 3.0.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     guard (2.17.0)
@@ -300,6 +303,7 @@ DEPENDENCIES
   capybara
   delayed_job_active_record
   ez-status!
+  generator_spec
   guard-rspec
   launchy
   pry-rails

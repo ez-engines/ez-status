@@ -19,30 +19,107 @@ Run rails generator for easy config setup:
 $ rails generate ez:status:install
 ```
 
+## Usage
+
+You can mount this inside your app routes by adding this to `config/routes.rb`:
+
+```ruby
+mount Ez::Status::Engine, at: '/status'
+```
+
 ## Configuration
 
 Configuration interface allows you to change default behavior
 
 ```ruby
 # config/initializers/ez_status.rb
+require 'ez/status/providers/database'
+require 'ez/status/providers/cache'
+# require 'ez/status/providers/delayed_job'
+# require 'ez/status/providers/redis'
+# require 'ez/status/providers/resque'
+# require 'ez/status/providers/sidekiq'
+
+# class MyCustomProvider
+#   def check
+#     uri = URI.parse('http://www.google.com/')
+#     request = Net::HTTP::Get.new(uri)
+#     req_options = {
+#       use_ssl: uri.scheme == 'https',
+#     }
+#
+#     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+#       http.request(request)
+#     end
+#     [response.code == '200', response.message, response.code]
+#   rescue StandardError => e
+#     [false, e.message]
+#   end
+# end
+
 Ez::Status.configure do |config|
+  # config.ui_header = 'MyStatus'
+
+  # config.basic_auth_credentials = {
+  #   username: 'MyUsername',
+  #   password: 'MyPassword'
+  # }
+
   config.monitors = [
     Ez::Status::Providers::Database,
     Ez::Status::Providers::Cache,
-    # Ez::Status::Providers::Redis,
-    # Ez::Status::Providers::Sidekiq,
-    # MyCustomProvider,
+  # Ez::Status::Providers::DelayedJob,
+  # Ez::Status::Providers::Redis,
+  # Ez::Status::Providers::Sidekiq,
+  # MyCustomProvider
   ]
+end
+```
 
-  # Status page ships with default generated CSS classes.
-  # You can always inspect them in the browser and override
-  config.ui_custom_css_map = {
-    'ez-status-container' => 'you custom css classes here'
+### Basic Authentication
+
+```ruby
+Ez::Status.configure do |config|
+  config.basic_auth_credentials = {
+    username: 'MyUsername',
+    password: 'MyPassword'
   }
 end
 ```
 
+### Change Header
+
+```ruby
+Ez::Status.configure do |config|
+  config.ui_header = 'My Header'
+end
+```
+
 ## Examples
+
+```ruby
+class MyCustomProvider
+  def check
+    uri = URI.parse('http://www.google.com/')
+    request = Net::HTTP::Get.new(uri)
+    req_options = {
+      use_ssl: uri.scheme == 'https',
+    }
+
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+      http.request(request)
+    end
+    [response.code == '200', response.message, response.code]
+  rescue StandardError => e
+    [false, e.message]
+  end
+end
+
+Ez::Status.configure do |config|
+  config.monitors = [
+    MyCustomProvider
+  ]
+end
 
 ### HTML version
 
@@ -64,7 +141,7 @@ Just create your own class with 1 public method `run!` and raise an exception in
 
 ```ruby
 class MyCustomProvider
-  def run!
+  def check
     raise 'Oops!' if false
 
     'OK'
@@ -72,16 +149,17 @@ class MyCustomProvider
 end
 ```
 
-## Usage
+## TODO
 
-You can mount this inside your app routes by adding this to `config/routes.rb`:
+-
+- 
+- 
 
-```ruby
-mount Ez::Status::Engine, at: '/status'
-```
+## Author
 
-## Contributing
-TODO
+Volodya Sveredyuk, Telegram Channel: [SveredyukCast](https://t.me/svcast)
+
+Vasyl Shevchenko, GitHub: [VasylShevchenko](https://github.com/VasylShevchenko)
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

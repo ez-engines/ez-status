@@ -1,6 +1,50 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
+require 'ez/status/providers/database'
+require 'ez/status/providers/cache'
+require 'ez/status/providers/delayed_job'
+require 'ez/status/providers/redis'
+require 'ez/status/providers/sidekiq'
+
 RSpec.describe '/status', type: :feature do
+  describe 'Basic Authentication' do
+    context 'custom' do
+      around do |spec|
+        Ez::Status.config.basic_auth_credentials = {
+          username: username,
+          password: password
+        }
+        spec.run
+        Ez::Status.config.basic_auth_credentials = nil
+      end
+
+      before do
+        encoded_login = ["#{username}:#{password}"].pack('m*')
+        page.driver.header 'Authorization', "Basic #{encoded_login}"
+        visit '/status'
+      end
+
+      let(:username) { 'MyUsername' }
+      let(:password) { 'MyPassword' }
+
+      it 'renders page' do
+        expect(page).to have_selector 'h1', text: 'Status'
+      end
+    end
+
+    context 'default: without basic auth credentials' do
+      before do
+        visit '/status'
+      end
+
+      it 'renders page' do
+        expect(page).to have_selector 'h1', text: 'Status'
+      end
+    end
+  end
+
   describe 'header' do
     context 'custom' do
       around do |spec|
@@ -62,28 +106,99 @@ RSpec.describe '/status', type: :feature do
     end
   end
 
-  describe 'database check' do
+  describe 'check default providers' do
+    let(:monitors) do
+      [
+        Ez::Status::Providers::Database,
+        Ez::Status::Providers::Cache,
+        Ez::Status::Providers::DelayedJob,
+        Ez::Status::Providers::Redis,
+        Ez::Status::Providers::Sidekiq
+      ]
+    end
+
+    around do |spec|
+      Ez::Status.config.monitors = monitors
+      spec.run
+      Ez::Status.config.monitors = []
+    end
+
     context 'success' do
       before { visit '/status' }
 
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Database'
-        expect(page).to have_content 'OK'
+      it 'show success message for Database' do
+        within('#Database') do
+          expect(page).to have_content 'Database'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for Cache' do
+        within('#Cache') do
+          expect(page).to have_content 'Cache'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for DelayedJob' do
+        within('#DelayedJob') do
+          # rails generate delayed_job:active_record
+          # rake db:migrate
+          expect(page).to have_content 'DelayedJob'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for Redis' do
+        within('#Redis') do
+          expect(page).to have_content 'Redis'
+          expect(page).to have_content 'OK'
+        end
+      end
+
+      it 'show success message for Sidekiq' do
+        within('#Sidekiq') do
+          expect(page).to have_content 'Sidekiq'
+          expect(page).to have_content 'OK'
+        end
       end
     end
 
     context 'failure' do
       before do
-        database_check_mock = instance_double(Ez::Status::Providers::Database, check!: false)
-        allow(Ez::Status::Providers::Database).to receive(:new).and_return(database_check_mock)
+        monitors.each do |monitor|
+          check_mock = instance_double(monitor, check: false)
+          allow(monitor).to receive(:new).and_return(check_mock)
+        end
         visit '/status'
       end
 
-      it 'show success message' do
-        expect(page).to have_content 'Status'
-        expect(page).to have_content 'Database'
-        expect(page).to have_content 'FAILURE'
+      it 'show failure message for Database' do
+        within('#Database') do
+          expect(page).to have_content 'Database'
+          expect(page).to have_content 'FAILURE'
+        end
+      end
+
+      it 'show failure message for Cache' do
+        within('#Cache') do
+          expect(page).to have_content 'Cache'
+          expect(page).to have_content 'FAILURE'
+        end
+      end
+
+      it 'show failure message for DelayedJob' do
+        within('#DelayedJob') do
+          expect(page).to have_content 'DelayedJob'
+          expect(page).to have_content 'FAILURE'
+        end
+      end
+
+      it 'show failure message for Redis' do
+        within('#Redis') do
+          expect(page).to have_content 'Redis'
+          expect(page).to have_content 'FAILURE'
+        end
       end
     end
   end

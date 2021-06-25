@@ -1,4 +1,19 @@
-require 'ez/status/providers/database'
+# frozen_string_literal: true
+
+require 'generator_spec'
+require 'generators/ez/status/install_generator'
+
+describe Ez::Status::InstallGenerator, type: :generator do
+  destination File.expand_path('../../../../../tmp', __dir__)
+  arguments %w[something]
+
+  before(:all) do
+    prepare_destination
+    run_generator
+  end
+
+  it 'creates a config initializer' do
+    assert_file 'config/initializers/ez_status.rb', "require 'ez/status/providers/database'
 require 'ez/status/providers/cache'
 # require 'ez/status/providers/delayed_job'
 # require 'ez/status/providers/redis'
@@ -38,4 +53,7 @@ Ez::Status.configure do |config|
     # Ez::Status::Providers::Sidekiq,
     # MyCustomProvider
   ]
+end
+"
+  end
 end

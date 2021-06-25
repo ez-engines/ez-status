@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ez/status/version'
 require 'ez/status/engine'
 
@@ -9,6 +11,10 @@ module Ez
 
     configure do |config|
       config.monitors = []
+
+      config.basic_auth_credentials = {}
+
+      config.ui_header = nil
       config.ui_custom_css_map = {}
     end
   end

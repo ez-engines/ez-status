@@ -1,4 +1,11 @@
-require 'ez/status/providers/database'
+# frozen_string_literal: true
+
+module Ez
+  module Status
+    class InstallGenerator < Rails::Generators::Base
+      def create_initializer_file
+        create_file 'config/initializers/ez_status.rb',
+                    "require 'ez/status/providers/database'
 require 'ez/status/providers/cache'
 # require 'ez/status/providers/delayed_job'
 # require 'ez/status/providers/redis'
@@ -38,4 +45,9 @@ Ez::Status.configure do |config|
     # Ez::Status::Providers::Sidekiq,
     # MyCustomProvider
   ]
+end
+"
+      end
+    end
+  end
 end

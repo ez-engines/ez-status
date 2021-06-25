@@ -1,9 +1,13 @@
 = div_for 'index-container'
-  h1 class="#{css_for('index-header')}" = header
+  header class="#{css_for('index-header')}"
+    h1 class="#{css_for('index-title')}"
+      span class="#{css_for('index-top')}" = header
+      span class="#{css_for('index-bottom')}"
 
   main class="#{css_for('index-main')}"
-    - monitors.each_pair do |monitor_name, monitor_result|
-
-      article class="#{css_for('index-status')}"
-        span class="#{css_for('index-check-name')}"   = monitor_name
-        span class="#{css_for('index-check-result')}" = monitor_result
+    - monitors.each do |monitor|
+      div class="#{css_for('index-status')}" id=(monitor[:name].to_sym)
+        span class="#{css_for('index-check-name')}" = monitor[:name]
+        span class="#{css_for('index-check-message')} #{css_for('failed') if monitor[:result] == 'FAILURE'}" = monitor[:msg]
+        span class="#{css_for('index-check-value')}   #{css_for('failed') if monitor[:result] == 'FAILURE'}" = monitor[:value]
+        span class="#{css_for('index-check-result')}  #{css_for('failed') if monitor[:result] == 'FAILURE'}" = monitor[:result]

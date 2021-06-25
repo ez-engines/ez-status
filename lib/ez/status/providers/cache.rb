@@ -7,10 +7,9 @@ module Ez
 
       class Cache
         def check
-          time = Time.now.to_s
-          Rails.cache.write(key, time)
+          Rails.cache.write(key, time_now)
           fetched = Rails.cache.read(key)
-          fetched == time
+          fetched == time_now
         rescue Exception => e
           raise CacheException.new(e.message)
         end
@@ -19,6 +18,10 @@ module Ez
 
         def key
           @key ||= 'Ez::Status::Providers::Cache'
+        end
+
+        def time_now
+          @time_now ||= Time.now.to_s
         end
       end
     end

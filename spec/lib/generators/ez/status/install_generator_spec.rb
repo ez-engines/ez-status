@@ -3,7 +3,7 @@
 require 'generator_spec'
 require 'generators/ez/status/install_generator'
 
-fdescribe Ez::Status::InstallGenerator, type: :generator do
+describe Ez::Status::InstallGenerator, type: :generator do
   destination File.expand_path('../../../../../tmp', __dir__)
   arguments %w[something]
 

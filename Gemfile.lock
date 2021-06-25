@@ -109,6 +109,8 @@ GEM
     docile (1.4.0)
     erubi (1.10.0)
     ez-core (0.2.0)
+    fakeredis (0.7.0)
+      redis (>= 3.2, < 5.0)
     ffi (1.15.0)
     formatador (0.2.5)
     generator_spec (0.9.4)
@@ -303,6 +305,7 @@ DEPENDENCIES
   capybara
   delayed_job_active_record
   ez-status!
+  fakeredis
   generator_spec
   guard-rspec
   launchy

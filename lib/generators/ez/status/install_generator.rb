@@ -42,7 +42,6 @@ Ez::Status.configure do |config|
     Ez::Status::Providers::Cache,
     # Ez::Status::Providers::DelayedJob,
     # Ez::Status::Providers::Redis,
-    # Ez::Status::Providers::Resque,
     # Ez::Status::Providers::Sidekiq,
     # MyCustomProvider
   ]

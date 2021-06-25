@@ -10,8 +10,8 @@ module Ez
           ActiveRecord::Base.establish_connection # Establishes connection
           ActiveRecord::Base.connection # Calls connection object
           ActiveRecord::Base.connected?
-        rescue Exception => e
-          raise DatabaseException.new(e.message)
+        rescue StandardError => e
+          raise DatabaseException, e.message
         end
       end
     end

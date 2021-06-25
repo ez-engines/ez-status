@@ -10,8 +10,8 @@ module Ez
 
         def check
           ::Delayed::Job.count < DEFAULT_QUEUES_SIZE
-        rescue Exception => e
-          raise DelayedJobException.new(e.message)
+        rescue StandardError => e
+          raise DelayedJobException, e.message
         end
       end
     end

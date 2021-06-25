@@ -8,8 +8,8 @@ module Ez
       class Sidekiq
         def check
           ::Sidekiq.redis(&:info).present?
-        rescue Exception => e
-          raise SidekiqException.new(e.backtrace)
+        rescue StandardError => e
+          raise SidekiqException, e.message
         end
       end
     end

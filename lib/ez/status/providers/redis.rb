@@ -13,8 +13,8 @@ module Ez
           fetched = redis.get(key)
 
           fetched == time
-        rescue Exception => e
-          raise RedisException.new(e.message)
+        rescue StandardError => e
+          raise RedisException, e.message
         ensure
           redis.close
         end

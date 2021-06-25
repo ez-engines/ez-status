@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'capybara'
   spec.add_development_dependency 'delayed_job_active_record'
+  spec.add_development_dependency 'fakeredis'
   spec.add_development_dependency 'generator_spec'
   spec.add_development_dependency 'guard-rspec'
   spec.add_development_dependency 'launchy'

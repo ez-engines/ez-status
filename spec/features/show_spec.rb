@@ -6,7 +6,6 @@ require 'ez/status/providers/database'
 require 'ez/status/providers/cache'
 require 'ez/status/providers/delayed_job'
 require 'ez/status/providers/redis'
-require 'ez/status/providers/resque'
 require 'ez/status/providers/sidekiq'
 
 RSpec.describe '/status', type: :feature do
@@ -22,7 +21,7 @@ RSpec.describe '/status', type: :feature do
       end
 
       before do
-        encoded_login = ["#{username}:#{password}"].pack("m*")
+        encoded_login = ["#{username}:#{password}"].pack('m*')
         page.driver.header 'Authorization', "Basic #{encoded_login}"
         visit '/status'
       end
@@ -108,14 +107,15 @@ RSpec.describe '/status', type: :feature do
   end
 
   describe 'check default providers' do
-    let(:monitors) { [
-      Ez::Status::Providers::Database,
-      Ez::Status::Providers::Cache,
-      Ez::Status::Providers::DelayedJob,
-      Ez::Status::Providers::Redis,
-      Ez::Status::Providers::Resque,
-      Ez::Status::Providers::Sidekiq
-    ] }
+    let(:monitors) do
+      [
+        Ez::Status::Providers::Database,
+        Ez::Status::Providers::Cache,
+        Ez::Status::Providers::DelayedJob,
+        Ez::Status::Providers::Redis,
+        Ez::Status::Providers::Sidekiq
+      ]
+    end
 
     around do |spec|
       Ez::Status.config.monitors = monitors
@@ -152,13 +152,6 @@ RSpec.describe '/status', type: :feature do
       it 'show success message for Redis' do
         within('#Redis') do
           expect(page).to have_content 'Redis'
-          expect(page).to have_content 'OK'
-        end
-      end
-
-      it 'show success message for Resque' do
-        within('#Resque') do
-          expect(page).to have_content 'Resque'
           expect(page).to have_content 'OK'
         end
       end
@@ -204,20 +197,6 @@ RSpec.describe '/status', type: :feature do
       it 'show failure message for Redis' do
         within('#Redis') do
           expect(page).to have_content 'Redis'
-          expect(page).to have_content 'FAILURE'
-        end
-      end
-
-      it 'show failure message for Resque' do
-        within('#Resque') do
-          expect(page).to have_content 'Resque'
-          expect(page).to have_content 'FAILURE'
-        end
-      end
-
-      it 'show failure message for Sidekiq' do
-        within('#Sidekiq') do
-          expect(page).to have_content 'Sidekiq'
           expect(page).to have_content 'FAILURE'
         end
       end

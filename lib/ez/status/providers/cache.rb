@@ -10,8 +10,8 @@ module Ez
           Rails.cache.write(key, time_now)
           fetched = Rails.cache.read(key)
           fetched == time_now
-        rescue Exception => e
-          raise CacheException.new(e.message)
+        rescue StandardError => e
+          raise CacheException, e.message
         end
 
         private

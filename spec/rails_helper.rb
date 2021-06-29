@@ -15,7 +15,6 @@ require 'capybara/rails'
 require 'byebug'
 
 require 'redis'
-require 'resque'
 require 'sidekiq'
 require 'delayed_job_active_record'
 

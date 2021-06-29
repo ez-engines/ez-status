@@ -17,7 +17,6 @@ describe Ez::Status::InstallGenerator, type: :generator do
 require 'ez/status/providers/cache'
 # require 'ez/status/providers/delayed_job'
 # require 'ez/status/providers/redis'
-# require 'ez/status/providers/resque'
 # require 'ez/status/providers/sidekiq'
 
 # class MyCustomProvider

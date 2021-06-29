@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry-rails'
   spec.add_development_dependency 'redis'
   spec.add_development_dependency 'rspec-rails'
+  spec.add_development_dependency 'rails-controller-testing'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'sidekiq'
   spec.add_development_dependency 'simplecov'

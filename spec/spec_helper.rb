@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 require 'pry'
+require 'simplecov'
+
+SimpleCov.start('rails') do
+  profiles.delete(:root_filter)
+  filters.clear
+  add_filter do |src|
+    !(src.filename =~ /^#{SimpleCov.root}/) unless src.filename =~ /\/ez_status\//
+  end
+end if ENV['COVERAGE']
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

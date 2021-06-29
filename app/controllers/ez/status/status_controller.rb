@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_dependency 'ez/status/application_controller'
-
 module Ez
   module Status
     class StatusController < ApplicationController
+      layout Ez::Status.config.layout || 'layouts/application'
+
       before_action :authenticate_with_basic_auth
 
       def index

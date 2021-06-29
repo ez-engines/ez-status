@@ -37,6 +37,8 @@ require 'ez/status/providers/cache'
 # end
 
 Ez::Status.configure do |config|
+  # config.layout = 'layouts/application'
+
   # config.ui_header = 'MyStatus'
 
   # config.basic_auth_credentials = {

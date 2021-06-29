@@ -57,8 +57,12 @@ require 'ez/status/providers/cache'
 # end
 
 Ez::Status.configure do |config|
+  # Define your base controller and routes
+  config.status_base_controller = 'ApplicationController'
+  config.status_base_routes = '/status'
+
   # config.layout = 'layouts/application'
-  
+
   # config.ui_header = 'MyStatus'
 
   # config.basic_auth_credentials = {

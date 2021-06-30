@@ -10,11 +10,14 @@ module Ez
     include Ez::Configurator
 
     configure do |config|
-      config.monitors = []
-
+      config.status_base_controller = nil
+      config.status_base_routes     = nil
+      config.layout                 = nil
       config.basic_auth_credentials = {}
 
-      config.ui_header = nil
+      config.monitors = []
+
+      config.ui_header         = nil
       config.ui_custom_css_map = {}
     end
   end

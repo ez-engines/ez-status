@@ -10,7 +10,7 @@ require 'ez/status/providers/sidekiq'
 
 RSpec.describe '/status', type: :feature do
   describe 'Basic Authentication' do
-    context 'custom' do
+    context 'when custom' do
       around do |spec|
         Ez::Status.config.basic_auth_credentials = {
           username: username,
@@ -34,7 +34,7 @@ RSpec.describe '/status', type: :feature do
       end
     end
 
-    context 'default: without basic auth credentials' do
+    context 'when default: without basic auth credentials' do
       before do
         visit '/status'
       end
@@ -46,7 +46,7 @@ RSpec.describe '/status', type: :feature do
   end
 
   describe 'header' do
-    context 'custom' do
+    context 'when custom' do
       around do |spec|
         Ez::Status.config.ui_header = custom_text
         spec.run
@@ -64,7 +64,7 @@ RSpec.describe '/status', type: :feature do
       end
     end
 
-    context 'default' do
+    context 'when default' do
       before { visit '/status' }
 
       it 'renders h1 with Status text' do
@@ -74,7 +74,7 @@ RSpec.describe '/status', type: :feature do
   end
 
   describe 'css_selectors' do
-    context 'default' do
+    context 'when default' do
       before { visit '/status' }
 
       it 'decorate DOM with ez-status classes' do
@@ -87,7 +87,7 @@ RSpec.describe '/status', type: :feature do
       end
     end
 
-    context 'custom' do
+    context 'when custom' do
       around do |spec|
         Ez::Status.config.ui_custom_css_map = {
           'ez-status-index-container' => 'custom-status-index-container'
@@ -99,7 +99,7 @@ RSpec.describe '/status', type: :feature do
       before { visit '/status' }
 
       it 'overrides with ui_custom_css_map' do
-        expect(page).to_not have_selector('.ez-status-index-container')
+        expect(page).not_to have_selector('.ez-status-index-container')
         expect(page).to have_selector('.custom-status-index-container')
         # TODO: Spec all custom css overrides
       end
@@ -123,7 +123,7 @@ RSpec.describe '/status', type: :feature do
       Ez::Status.config.monitors = []
     end
 
-    context 'success' do
+    context 'when success' do
       before { visit '/status' }
 
       it 'show success message for Database' do
@@ -164,7 +164,7 @@ RSpec.describe '/status', type: :feature do
       end
     end
 
-    context 'failure' do
+    context 'when failure' do
       before do
         monitors.each do |monitor|
           check_mock = instance_double(monitor, check: false)

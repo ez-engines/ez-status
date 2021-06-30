@@ -7,17 +7,17 @@ describe Ez::Status::InstallGenerator, type: :generator do
   destination File.expand_path('../../../../../tmp', __dir__)
   arguments %w[something]
 
-  before(:all) do
+  before do
     prepare_destination
     run_generator
   end
 
+  # rubocop:disable RSpec/ExampleLength
   it 'creates a config initializer' do
     assert_file 'config/initializers/ez_status.rb', "require 'ez/status/providers/database'
 require 'ez/status/providers/cache'
 # require 'ez/status/providers/delayed_job'
 # require 'ez/status/providers/redis'
-# require 'ez/status/providers/resque'
 # require 'ez/status/providers/sidekiq'
 
 # class MyCustomProvider
@@ -38,6 +38,12 @@ require 'ez/status/providers/cache'
 # end
 
 Ez::Status.configure do |config|
+  # Define your base controller and routes
+  config.status_base_controller = 'ApplicationController'
+  config.status_base_routes = '/status'
+
+  # config.layout = 'layouts/application'
+
   # config.ui_header = 'MyStatus'
 
   # config.basic_auth_credentials = {
@@ -56,4 +62,5 @@ Ez::Status.configure do |config|
 end
 "
   end
+  # rubocop:enable RSpec/ExampleLength
 end

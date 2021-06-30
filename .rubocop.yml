@@ -1,4 +1,6 @@
-require: rubocop
+require:
+  - rubocop
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 2.7
@@ -9,8 +11,12 @@ AllCops:
     - vendor/**/*
     - config.ru
     - spec/dummy/**/*
+    - tmp/**/*
 
 Style/Documentation:
+  Enabled: false
+
+Gemspec/RequiredRubyVersion:
   Enabled: false
 
 Metrics/LineLength:

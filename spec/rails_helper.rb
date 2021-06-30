@@ -2,6 +2,7 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'rails-controller-testing'
 require 'fakeredis'
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -15,7 +16,6 @@ require 'capybara/rails'
 require 'byebug'
 
 require 'redis'
-require 'resque'
 require 'sidekiq'
 require 'delayed_job_active_record'
 

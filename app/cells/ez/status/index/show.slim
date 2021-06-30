@@ -1,13 +1,28 @@
 = div_for 'index-container'
-  header class="#{css_for('index-header')}"
-    h1 class="#{css_for('index-title')}"
-      span class="#{css_for('index-top')}" = header
-      span class="#{css_for('index-bottom')}"
+  = div_for 'index-inner-container'
+    header class="#{css_for('index-header')}"
+      h1 class="#{css_for('index-title')}"
+        span class="#{css_for('index-top')}" = header
+        span class="#{css_for('index-bottom')}"
 
-  main class="#{css_for('index-main')}"
-    - monitors.each do |monitor|
-      div class="#{css_for('index-status')} #{css_for('failed') if monitor[:result] == 'FAILURE'}" id=(monitor[:name].to_sym)
-        span class="#{css_for('index-check-name')}" = monitor[:name]
-        span class="#{css_for('index-check-message')}" = monitor[:msg]
-        span class="#{css_for('index-check-value')}"   = monitor[:value]
-        span class="#{css_for('index-check-result')}"  = monitor[:result]
+    div class="#{css_for('index-monitors-collection')}"
+      - monitors.each do |monitor|
+        div class="#{css_for('index-status')} #{css_for('failed') if monitor[:result] == 'FAILURE'}" id=(monitor[:name].to_sym)
+
+          - if monitor[:msg]
+            div class="#{css_for('index-check-message')}"
+              span class="#{css_for('index-check-name-message')}"
+                = monitor[:msg]
+
+          - if monitor[:value]
+            div class="#{css_for('index-check-value')}"
+              span class="#{css_for('index-check-name-value')}"
+                = monitor[:value]
+
+          div class="#{css_for('index-check-result')}"
+            span class="#{css_for('index-check-name-result')}"
+              = monitor[:result]
+
+          div class="#{css_for('index-check-name')}"
+            span class="#{css_for('index-check-name-span')}"
+              = monitor[:name]

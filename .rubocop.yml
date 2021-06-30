@@ -44,3 +44,6 @@ Metrics/ClassLength:
 Layout/HashAlignment:
   EnforcedColonStyle: table
   EnforcedHashRocketStyle: table
+
+RSpec/MultipleExpectations:
+  Enabled: false

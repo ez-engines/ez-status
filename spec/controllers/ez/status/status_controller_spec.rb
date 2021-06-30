@@ -15,7 +15,9 @@ RSpec.describe Ez::Status::StatusController do
       end
     end
 
-    context 'when custom layout: layouts/custom_application' do
+    xcontext 'when custom layout: layouts/custom_application' do
+      subject { get :index }
+
       around do |spec|
         Ez::Status.config.layout = 'layouts/custom_application'
         routes { Ez::Status::Engine.routes }
@@ -24,21 +26,19 @@ RSpec.describe Ez::Status::StatusController do
         Ez::Status.config.layout = nil
       end
 
-      subject { get :index }
-
-      it 'layout' do
+      xit 'layout' do
         expect(subject).not_to render_template(layout: :application)
       end
     end
 
-    context 'when missing template layouts/application_not_found' do
+    xcontext 'when missing template layouts/application_not_found' do
+      subject { get :index }
+
       around do |spec|
         Ez::Status.config.layout = 'layouts/application_not_found'
         spec.run
         Ez::Status.config.layout = nil
       end
-
-      subject { get :index }
 
       it 'renders page' do
         expect(subject).to render_template('layouts/application_not_found')

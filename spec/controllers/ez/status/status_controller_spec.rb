@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
-# require 'controllers/ez/status/status_controller'
+require 'ez/status/status_controller'
 
 RSpec.describe Ez::Status::StatusController do
   routes { Ez::Status::Engine.routes }
 
   describe 'Application Layout' do
-    context 'default layout' do
+    context 'when default layout' do
       subject { get :index }
 
       it 'renders page' do
@@ -13,7 +15,7 @@ RSpec.describe Ez::Status::StatusController do
       end
     end
 
-    context 'custom layout: layouts/custom_application' do
+    context 'when custom layout: layouts/custom_application' do
       around do |spec|
         Ez::Status.config.layout = 'layouts/custom_application'
         routes { Ez::Status::Engine.routes }
@@ -29,7 +31,7 @@ RSpec.describe Ez::Status::StatusController do
       end
     end
 
-    context 'missing template layouts/application_not_found' do
+    context 'when missing template layouts/application_not_found' do
       around do |spec|
         Ez::Status.config.layout = 'layouts/application_not_found'
         spec.run
@@ -39,11 +41,8 @@ RSpec.describe Ez::Status::StatusController do
       subject { get :index }
 
       it 'renders page' do
-        expect(subject).to render_template("layouts/application_not_found")
+        expect(subject).to render_template('layouts/application_not_found')
       end
     end
   end
 end
-
-
-

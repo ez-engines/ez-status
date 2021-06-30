@@ -3,6 +3,7 @@
 module Ez
   module Status
     class InstallGenerator < Rails::Generators::Base
+      # rubocop:disable Metrics/MethodLength
       def create_initializer_file
         create_file 'config/initializers/ez_status.rb',
                     "require 'ez/status/providers/database'
@@ -53,6 +54,7 @@ Ez::Status.configure do |config|
 end
 "
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

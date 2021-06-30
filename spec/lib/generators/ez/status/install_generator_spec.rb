@@ -7,11 +7,12 @@ describe Ez::Status::InstallGenerator, type: :generator do
   destination File.expand_path('../../../../../tmp', __dir__)
   arguments %w[something]
 
-  before(:all) do
+  before do
     prepare_destination
     run_generator
   end
 
+  # rubocop:disable RSpec/ExampleLength
   it 'creates a config initializer' do
     assert_file 'config/initializers/ez_status.rb', "require 'ez/status/providers/database'
 require 'ez/status/providers/cache'
@@ -61,4 +62,5 @@ Ez::Status.configure do |config|
 end
 "
   end
+  # rubocop:enable RSpec/ExampleLength
 end

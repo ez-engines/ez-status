@@ -77,13 +77,44 @@ RSpec.describe '/status', type: :feature do
     context 'when default' do
       before { visit '/status' }
 
-      it 'decorate DOM with ez-status classes' do
+      it 'decorate DOM with ez-status classes for container' do
         expect(page).to have_selector('.ez-status-index-container')
+        expect(page).to have_selector('.ez-status-index-inner-container')
+      end
+
+      it 'decorate DOM with ez-status classes for header' do
         expect(page).to have_selector('.ez-status-index-header')
-        expect(page).to have_selector('.ez-status-index-main')
+        expect(page).to have_selector('.ez-status-index-title')
+        expect(page).to have_selector('.ez-status-index-title-span')
+      end
+
+      it 'decorate DOM with ez-status classes for monitors' do
+        expect(page).to have_selector('.ez-status-index-monitors-collection')
+      end
+
+      it 'decorate DOM with ez-status classes for monitor' do
         expect(page).to have_selector('.ez-status-index-status')
-        expect(page).to have_selector('.ez-status-index-check-name')
+        expect(page).to have_selector('.ez-status-index-failed')
+      end
+
+      it 'decorate DOM with ez-status classes for message' do
+        expect(page).to have_selector('.ez-status-index-check-message')
+        expect(page).to have_selector('.ez-status-index-check-message-span')
+      end
+
+      it 'decorate DOM with ez-status classes for value' do
+        expect(page).to have_selector('.ez-status-index-check-value')
+        expect(page).to have_selector('.ez-status-index-check-value-span')
+      end
+
+      it 'decorate DOM with ez-status classes for result' do
         expect(page).to have_selector('.ez-status-index-check-result')
+        expect(page).to have_selector('.ez-status-index-check-result-span')
+      end
+
+      it 'decorate DOM with ez-status classes for name' do
+        expect(page).to have_selector('.ez-status-index-check-name')
+        expect(page).to have_selector('.ez-status-index-check-name-span')
       end
     end
 

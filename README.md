@@ -154,6 +154,24 @@ class MyCustomProvider
 end
 ```
 
+## Creating a Custom Style
+
+### Style for Semantic Ui
+
+```ruby
+config.ui_custom_css_map = {
+  'ez-status-index-container'           => 'ui grid',
+  'ez-status-index-inner-container'     => 'six wide column',
+  'ez-status-index-monitors-collection' => 'ui middle aligned divided list',
+  'ez-status-index-status'              => 'item',
+  'ez-status-index-check-name'          => 'content',
+  'ez-status-index-check-message'       => 'right floated content',
+  'ez-status-index-check-value'         => 'right floated content',
+  'ez-status-index-check-result'        => 'right floated content',
+  'ez-status-index-check-name-span'     => 'ui green label'
+}
+```
+
 ## TODO
 
 -

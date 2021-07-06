@@ -78,8 +78,49 @@ Ez::Status.configure do |config|
   # Ez::Status::Providers::Sidekiq,
   # MyCustomProvider
   ]
+
+  # config.ui_custom_css_map = {
+  #   'ez-status-index-container'           => 'your_css_class',
+  #   'ez-status-index-inner-container'     => 'your_css_class',
+  #   # heder
+  #   'ez-status-index-inner-header'        => 'your_css_class',
+  #   'ez-status-index-inner-title'         => 'your_css_class',
+  #   'ez-status-index-inner-title-span'    => 'your_css_class',
+  #   # monitors
+  #   'ez-status-index-monitors-collection' => 'your_css_class',
+  #   # monitor
+  #   'ez-status-index-status'              => 'your_css_class',
+  #   'ez-status-index-failed'              => 'your_css_class',
+  #
+  #   'ez-status-index-check-message'       => 'your_css_class',
+  #   'ez-status-index-check-message-span'  => 'your_css_class',
+  #
+  #   'ez-status-index-check-value'         => 'your_css_class',
+  #   'ez-status-index-check-value-span'    => 'your_css_class',
+  #
+  #   'ez-status-index-check-result'        => 'your_css_class',
+  #   'ez-status-index-check-result-span'   => 'your_css_class',
+  #
+  #   'ez-status-index-check-name'          => 'your_css_class',
+  #   'ez-status-index-check-name-span'     => 'your_css_class'
+  # }
 end
 ```
+
+### ActiveRecord migrations:
+
+**If you want save data to DataBase, please change configuration first**
+
+config/initializers/ez_status.rb
+```ruby
+config.status_table_name = 'my_model_name'
+```
+
+And run
+```bash
+rails generate ez:status:migrations
+```
+
 
 ### Basic Authentication
 

@@ -15,6 +15,8 @@ module Ez
       config.layout                 = nil
       config.basic_auth_credentials = {}
 
+      config.status_table_name      = nil
+
       config.monitors = []
 
       config.ui_header         = nil

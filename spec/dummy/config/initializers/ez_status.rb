@@ -35,6 +35,8 @@ Ez::Status.configure do |config|
   #   password: 'MyPassword'
   # }
 
+  #config.status_table_name = 'status'
+
   config.monitors = [
     Ez::Status::Providers::Database,
     Ez::Status::Providers::Cache,

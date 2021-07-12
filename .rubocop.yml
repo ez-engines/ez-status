@@ -50,3 +50,8 @@ RSpec/MultipleExpectations:
 
 RSpec/AnyInstance:
   Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - lib/generators/ez/status/install_generator.rb
+    - lib/generators/ez/status/migrations_generator.rb

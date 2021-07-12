@@ -26,17 +26,24 @@ Ez::Status.configure do |config|
   config.status_base_controller = 'ApplicationController'
   config.status_base_routes = '/status'
 
+  # You can change layout, default is using application layout
   # config.layout = 'layouts/application'
 
+  # You can change the header text
   # config.ui_header = 'MyStatus'
 
+  # Basic Authentication
   # config.basic_auth_credentials = {
   #   username: 'MyUsername',
   #   password: 'MyPassword'
   # }
 
-  #config.status_table_name = 'status'
+  # Adapter to store all date
+  # config.store = Ez::Status::Store.new
+  # and DB table name that you can change as well
+  # config.active_record_table_name = :ez_status_store
 
+  # Define your monitors
   config.monitors = [
     Ez::Status::Providers::Database,
     Ez::Status::Providers::Cache,
@@ -46,6 +53,8 @@ Ez::Status.configure do |config|
     # MyCustomProvider
   ]
 
+  # Pass your custom css classes through css_map config
+  # Defaults would be merged with yours:
   # config.ui_custom_css_map = {
   #   'ez-status-index-container'           => 'your_css_class',
   #   'ez-status-index-inner-container'     => 'your_css_class',

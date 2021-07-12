@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'generator_spec'
   spec.add_development_dependency 'guard-rspec'
   spec.add_development_dependency 'launchy'
+  spec.add_development_dependency 'pg'
   spec.add_development_dependency 'pry-rails'
   spec.add_development_dependency 'rails-controller-testing'
   spec.add_development_dependency 'redis'
@@ -44,5 +45,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'sidekiq'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'sqlite3'
-  spec.add_development_dependency 'pg'
 end

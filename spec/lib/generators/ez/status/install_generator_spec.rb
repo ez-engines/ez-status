@@ -11,7 +11,8 @@ describe Ez::Status::InstallGenerator, type: :generator do
     prepare_destination
     run_generator
   end
-  # TODO: add frozen_string_literal: true
+
+  # rubocop:disable RSpec/ExampleLength
   it 'creates a config initializer' do
     assert_file 'config/initializers/ez_status.rb', "require 'ez/status/providers/database'
 require 'ez/status/providers/cache'

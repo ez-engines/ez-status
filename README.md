@@ -113,7 +113,10 @@ end
 
 config/initializers/ez_status.rb
 ```ruby
-config.status_table_name = 'my_model_name'
+# Backend adapter to store all status
+config.backend = Ez::Status::Store.new
+# and DB table name that you can change as well
+config.active_record_table_name = :ez_status_store
 ```
 
 And run

@@ -6,15 +6,15 @@ module Ez
     class MigrationsGenerator < Rails::Generators::Base
       def create_migration
         create_file "db/migrate/#{current_time}_create_#{table_name.to_s.underscore}.rb",
-                    "class Create#{table_name.to_s.classify} < ActiveRecord::Migration[#{ActiveRecord::Migration.current_version}]
+                    "class Create#{table_name.to_s.camelize} < ActiveRecord::Migration[#{ActiveRecord::Migration.current_version}]
   def change
     create_table :#{table_name.to_s.underscore} do |t|
-      t.string :name,    null: false
-      t.string :result,  null: true
-      t.string :message, null: true
-      t.string :value,   null: true
+      t.string  :monitor_name, null: false
+      t.boolean :result,       null: true
+      t.string  :message,      null: true
+      t.bigint  :value,        null: true
 
-      t.timestamps null: false
+      t.datetime :created_at,  null: false, default: -> { 'CURRENT_TIMESTAMP' }
     end
   end
 end
@@ -28,7 +28,6 @@ end
       end
 
       def table_name
-        raise 'You need setup active_record_table_name in config file' if config.active_record_table_name.blank?
         config.active_record_table_name
       end
 

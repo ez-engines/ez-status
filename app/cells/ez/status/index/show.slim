@@ -6,22 +6,8 @@
 
     div class="#{css_for('index-monitors-collection')}"
       - monitors.each do |monitor|
-        div class="#{css_for('index-status')} #{css_for('index-failed') if monitor[:result] == 'FAILURE'}" id=(monitor[:name].to_sym)
-
-          - if monitor[:msg]
-            div class="#{css_for('index-check-message')}"
-              span class="#{css_for('index-check-message-span')}"
-                = monitor[:msg]
-
-          - if monitor[:value]
-            div class="#{css_for('index-check-value')}"
-              span class="#{css_for('index-check-value-span')}"
-                = monitor[:value]
-
-          div class="#{css_for('index-check-result')}"
-            span class="#{css_for('index-check-result-span')}"
-              = monitor[:result]
-
-          div class="#{css_for('index-check-name')}"
-            span class="#{css_for('index-check-name-span')}"
-              = monitor[:name]
+        div class="#{css_for('index-status')} #{css_for('index-failed') if monitor[:result] == 'FAILURE'}" id=(monitor[:monitor_name].to_sym)
+          - columns.each do |column_name|
+            div class="#{css_for_column_name("index-check-#{column_name}")}"
+              span class="#{css_for_column_name("index-check-#{column_name}-span")}"
+                = monitor[column_name]

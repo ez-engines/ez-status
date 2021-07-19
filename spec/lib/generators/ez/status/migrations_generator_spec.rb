@@ -9,11 +9,10 @@ describe Ez::Status::MigrationsGenerator, type: :generator do
 
   let(:delay_in_seconds) { 5 }
   let(:current_time)     { Time.now.strftime('%Y%m%d%H%M%S') }
-  let(:table_name)       { :ez_status_store }
+  let(:table_name)       { :ez_status_records } # Default table name lib/ez/status.rb
   let(:current_version)  { ActiveRecord::Migration.current_version }
 
   before do
-    Ez::Status.config.active_record_table_name = :ez_status_store
     prepare_destination
     run_generator
   end
@@ -21,15 +20,15 @@ describe Ez::Status::MigrationsGenerator, type: :generator do
   # rubocop:disable RSpec/ExampleLength
   it 'creates a migration' do
     assert_file "db/migrate/#{current_time}_create_#{table_name.to_s.underscore}.rb",
-                "class Create#{table_name.to_s.classify} < ActiveRecord::Migration[#{current_version}]
+                "class Create#{table_name.to_s.camelize} < ActiveRecord::Migration[#{current_version}]
   def change
     create_table :#{table_name.to_s.underscore} do |t|
-      t.string :name,    null: false
-      t.string :result,  null: true
-      t.string :message, null: true
-      t.string :value,   null: true
+      t.string  :monitor_name, null: false
+      t.boolean :result,       null: true
+      t.string  :message,      null: true
+      t.bigint  :value,        null: true
 
-      t.timestamps null: false
+      t.datetime :created_at,  null: false, default: -> { 'CURRENT_TIMESTAMP' }
     end
   end
 end

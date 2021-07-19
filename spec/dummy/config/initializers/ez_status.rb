@@ -38,10 +38,11 @@ Ez::Status.configure do |config|
   #   password: 'MyPassword'
   # }
 
-  # Adapter to store all date
-  # config.store = Ez::Status::Store.new
-  # and DB table name that you can change as well
-  # config.active_record_table_name = :ez_status_store
+  # Order columns and which columns need to show
+  # config.columns = [:message, :value, :result, :monitor_name,]
+
+  # DB table name, that you can change as well
+  # config.active_record_table_name = :ez_status_records
 
   # Define your monitors
   config.monitors = [
@@ -58,26 +59,30 @@ Ez::Status.configure do |config|
   # config.ui_custom_css_map = {
   #   'ez-status-index-container'           => 'your_css_class',
   #   'ez-status-index-inner-container'     => 'your_css_class',
-  #   # heder
+  #
+  #   # header
   #   'ez-status-index-inner-header'        => 'your_css_class',
   #   'ez-status-index-inner-title'         => 'your_css_class',
   #   'ez-status-index-inner-title-span'    => 'your_css_class',
+  #
   #   # monitors
   #   'ez-status-index-monitors-collection' => 'your_css_class',
+  #
   #   # monitor
-  #   'ez-status-index-status'              => 'your_css_class',
-  #   'ez-status-index-failed'              => 'your_css_class',
+  #   'ez-status-index-status'                  => 'your_css_class',
+  #   'ez-status-index-failed'                  => 'your_css_class',
   #
-  #   'ez-status-index-check-message'       => 'your_css_class',
-  #   'ez-status-index-check-message-span'  => 'your_css_class',
+  #   'ez-status-index-check-monitor-name'      => 'your_css_class',
+  #   'ez-status-index-check-monitor-name-span' => 'your_css_class'
   #
-  #   'ez-status-index-check-value'         => 'your_css_class',
-  #   'ez-status-index-check-value-span'    => 'your_css_class',
+  #   'ez-status-index-check-message'           => 'your_css_class',
+  #   'ez-status-index-check-message-span'      => 'your_css_class',
   #
-  #   'ez-status-index-check-result'        => 'your_css_class',
-  #   'ez-status-index-check-result-span'   => 'your_css_class',
+  #   'ez-status-index-check-value'             => 'your_css_class',
+  #   'ez-status-index-check-value-span'        => 'your_css_class',
   #
-  #   'ez-status-index-check-name'          => 'your_css_class',
-  #   'ez-status-index-check-name-span'     => 'your_css_class'
+  #   'ez-status-index-check-result'            => 'your_css_class',
+  #   'ez-status-index-check-result-span'       => 'your_css_class',
+  #
   # }
 end

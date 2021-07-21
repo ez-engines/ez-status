@@ -45,7 +45,7 @@ RSpec.describe '/status', type: :feature do
     end
   end
 
-  describe 'header' do
+  describe 'config.header' do
     context 'when custom' do
       around do |spec|
         Ez::Status.config.ui_header = custom_text
@@ -73,17 +73,115 @@ RSpec.describe '/status', type: :feature do
     end
   end
 
-  describe 'css_selectors' do
+  describe 'config.columns' do
     context 'when default' do
       before { visit '/status' }
 
-      it 'decorate DOM with ez-status classes' do
-        expect(page).to have_selector('.ez-status-index-container')
-        expect(page).to have_selector('.ez-status-index-header')
-        expect(page).to have_selector('.ez-status-index-main')
-        expect(page).to have_selector('.ez-status-index-status')
-        expect(page).to have_selector('.ez-status-index-check-name')
+      xit 'should default order' do
+        # order = /#{item1.name}.*#{item2.name}/m
+        # monitors = Ez::Status.check_all
+        # Ez::Status::DEFAULT_COLUMNS.map{|col| "ez-status-index-check-monitor-name" monitors monitors}
+        # expect(page.body).to match order
+      end
+
+      it 'expect monitor-name column' do
+        expect(page).to have_selector('.ez-status-index-check-monitor-name')
+        expect(page).to have_selector('.ez-status-index-check-monitor-name-span')
+      end
+
+      it 'expect result column' do
         expect(page).to have_selector('.ez-status-index-check-result')
+        expect(page).to have_selector('.ez-status-index-check-result-span')
+      end
+
+      it 'expect message column' do
+        expect(page).to have_selector('.ez-status-index-check-message')
+        expect(page).to have_selector('.ez-status-index-check-message-span')
+      end
+
+      it 'expect value column' do
+        expect(page).to have_selector('.ez-status-index-check-value')
+        expect(page).to have_selector('.ez-status-index-check-value-span')
+      end
+    end
+
+    context 'when custom' do
+      around do |spec|
+        Ez::Status.config.columns = %i[result monitor_name]
+        spec.run
+        Ez::Status.config.columns = Ez::Status::DEFAULT_COLUMNS
+      end
+
+      before { visit '/status' }
+
+      xit 'should correct custom order' do
+        # expect(page.body).to match order
+      end
+
+      it 'expect monitor-name column' do
+        expect(page).to have_selector('.ez-status-index-check-monitor-name')
+        expect(page).to have_selector('.ez-status-index-check-monitor-name-span')
+      end
+
+      it 'expect result column' do
+        expect(page).to have_selector('.ez-status-index-check-result')
+        expect(page).to have_selector('.ez-status-index-check-result-span')
+      end
+
+      it 'don\'t expect message column' do
+        expect(page).not_to have_selector('.ez-status-index-check-message')
+        expect(page).not_to have_selector('.ez-status-index-check-message-span')
+      end
+
+      it 'don\'t expect value column' do
+        expect(page).not_to have_selector('.ez-status-index-check-value')
+        expect(page).not_to have_selector('.ez-status-index-check-value-span')
+      end
+    end
+  end
+
+  describe 'config.ui_custom_css_map' do
+    context 'when default' do
+      before { visit '/status' }
+
+      it 'decorate DOM with ez-status classes for container' do
+        expect(page).to have_selector('.ez-status-index-container')
+        expect(page).to have_selector('.ez-status-index-inner-container')
+      end
+
+      it 'decorate DOM with ez-status classes for header' do
+        expect(page).to have_selector('.ez-status-index-header')
+        expect(page).to have_selector('.ez-status-index-title')
+        expect(page).to have_selector('.ez-status-index-title-span')
+      end
+
+      it 'decorate DOM with ez-status classes for monitors' do
+        expect(page).to have_selector('.ez-status-index-monitors-collection')
+      end
+
+      xit 'decorate DOM with ez-status classes for monitor' do
+        expect(page).to have_selector('.ez-status-index-status')
+        expect(page).to have_selector('.ez-status-index-failed')
+      end
+
+      it 'decorate DOM with ez-status classes for message' do
+        expect(page).to have_selector('.ez-status-index-check-message')
+        expect(page).to have_selector('.ez-status-index-check-message-span')
+      end
+
+      it 'decorate DOM with ez-status classes for value' do
+        expect(page).to have_selector('.ez-status-index-check-value')
+        expect(page).to have_selector('.ez-status-index-check-value-span')
+      end
+
+      it 'decorate DOM with ez-status classes for result' do
+        expect(page).to have_selector('.ez-status-index-check-result')
+        expect(page).to have_selector('.ez-status-index-check-result-span')
+      end
+
+      it 'decorate DOM with ez-status classes for name' do
+        expect(page).to have_selector('.ez-status-index-check-monitor-name')
+        expect(page).to have_selector('.ez-status-index-check-monitor-name-span')
       end
     end
 

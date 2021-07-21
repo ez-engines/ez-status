@@ -17,6 +17,11 @@ module Ez
         custom_css_map[scoped_item] || scoped_item
       end
 
+      def css_for_column_name(item)
+        item.gsub!(/_/, '-')
+        css_for(item)
+      end
+
       def custom_css_map
         @custom_css_map ||= Ez::Status.config.ui_custom_css_map || {}
       end

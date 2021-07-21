@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_15_064829) do
+ActiveRecord::Schema.define(version: 2021_07_21_003815) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
@@ -25,6 +28,14 @@ ActiveRecord::Schema.define(version: 2021_06_15_064829) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "ez_status_records", force: :cascade do |t|
+    t.string "monitor_name", null: false
+    t.boolean "result"
+    t.string "message"
+    t.bigint "value"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
 end

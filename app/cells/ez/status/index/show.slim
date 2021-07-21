@@ -2,27 +2,12 @@
   = div_for 'index-inner-container'
     header class="#{css_for('index-header')}"
       h1 class="#{css_for('index-title')}"
-        span class="#{css_for('index-top')}" = header
-        span class="#{css_for('index-bottom')}"
+        span class="#{css_for('index-title-span')}" = header
 
     div class="#{css_for('index-monitors-collection')}"
       - monitors.each do |monitor|
-        div class="#{css_for('index-status')} #{css_for('failed') if monitor[:result] == 'FAILURE'}" id=(monitor[:name].to_sym)
-
-          - if monitor[:msg]
-            div class="#{css_for('index-check-message')}"
-              span class="#{css_for('index-check-name-message')}"
-                = monitor[:msg]
-
-          - if monitor[:value]
-            div class="#{css_for('index-check-value')}"
-              span class="#{css_for('index-check-name-value')}"
-                = monitor[:value]
-
-          div class="#{css_for('index-check-result')}"
-            span class="#{css_for('index-check-name-result')}"
-              = monitor[:result]
-
-          div class="#{css_for('index-check-name')}"
-            span class="#{css_for('index-check-name-span')}"
-              = monitor[:name]
+        div class="#{css_for('index-status')} #{css_for('index-failed') if monitor[:result] == 'FAILURE'}" id=(monitor[:monitor_name].to_sym)
+          - columns.each do |column_name|
+            div class="#{css_for_column_name("index-check-#{column_name}")}"
+              span class="#{css_for_column_name("index-check-#{column_name}-span")}"
+                = monitor[column_name]

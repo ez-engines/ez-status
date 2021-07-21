@@ -47,3 +47,11 @@ Layout/HashAlignment:
 
 RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - lib/generators/ez/status/install_generator.rb
+    - lib/generators/ez/status/migrations_generator.rb

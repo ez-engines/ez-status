@@ -8,7 +8,7 @@ require 'ez/configurator'
 
 module Ez
   module Status
-    DEFAULT_COLUMNS = %i[monitor_name message value result]
+    DEFAULT_COLUMNS = %i[monitor_name message value result].freeze
 
     include Ez::Configurator
 
